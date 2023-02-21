@@ -1,0 +1,33 @@
+name: Tests
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+on:
+	push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [ready_for-Review, opened, synchronize]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: true
+    - name: Build
+      run: cargo build --verbose
+    - name: Run Tests
+      run: cargo test --verbose
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Build Artifacts
+        path: ${{github.event.repository.name}}/target/
