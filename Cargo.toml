@@ -12,5 +12,5 @@ crate-type = ["cdylib"]
 [profile.dist]
 inherits = "release"
 debug = true
-split-debuginfo = "packed"
+#split-debuginfo = "packed"
 
