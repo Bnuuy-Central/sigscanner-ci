@@ -57,7 +57,7 @@ jobs:
         run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/axodotdev/cargo-dist/releases/download/v0.0.3-prerelease11/cargo-dist-v0.0.3-prerelease11-installer.sh | sh
       - id: create-release
         run: |
-          cargo dist manifest --tag=${{ github.ref_name }} --artifacts=all --no-local-paths --output-format=json > dist-manifest.json
+          cargo dist manifest --tag=${{ github.ref_name }} --artifacts=all --no-local-paths --output-format=json --target=x86_64-unknown-linux-gnu --target=x86_64-apple-darwin --target=x86_64-pc-windows-msvc > dist-manifest.json
           echo "dist manifest ran successfully"
           cat dist-manifest.json
         
